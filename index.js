@@ -35,7 +35,8 @@ const loadPlayerTo = ((element, name) => {
                 const elm = document.createElement('a');
                 elm.target = '_blank';
                 elm.href = `https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=${card}&request_locale=en`;
-                elm.style.backgroundImage = `url(https://artworks-en-n.ygoresources.com/${Math.floor(card/10000)}/${Math.floor((card%10000)/100)}/${card%100}_1.png)`;
+                const imagePath = `${Math.floor(card/10000)}/${Math.floor((card%10000)/100)}/${card%100}_1.png`;
+                elm.style.backgroundImage = `image-set(url(https://artworks-en-db.ygoresources.com/${imagePath}) 1x, url(https://artworks-en-n.ygoresources.com/${imagePath}) 2x)`;
                 container.appendChild(elm);
             }
         }
