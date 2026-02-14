@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Feature Match Tool</title><script src="index.js" defer></script><link rel="stylesheet" href="index.css"></head>
+    <body>
+        <div id="top">
+            <span>
+                <label for="select-file">Replace decks.json:</label>
+                <input id="select-file" type="file" accept="application/json">
+            </span>
+            <span id="status"></span>
+            <button id="load-players">Load players</button>
+            <button id="left-right">Flip left/right</button>
+        </div>
+        <div id="bottom">
+            <div id="left" class="player-container red">
+                <div class="player-name"></div>
+                <div class="cards-container"></div>
+            </div>
+            <div id="right" class="player-container blue">
+                <div class="player-name"></div>
+                <div class="cards-container"></div>
+            </div>
+        </div>
+    </body>
+</html>
