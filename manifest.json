@@ -1,0 +1,22 @@
+{
+    "short_name": "Feature Match",
+    "name": "Yu-Gi-Oh! Feature Match tool",
+    "start_url": "/",
+    "background_color": "#333333",
+    "theme_color": "#4a4a4a",
+    "display": "standalone",
+    "orientation": "landscape",
+    "icons": [
+      {
+        "src": "/icon_192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/icon_512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+
+}
