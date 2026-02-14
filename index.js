@@ -19,7 +19,7 @@ const loadPlayerTo = ((element, name) => {
     const container = element.querySelector('.cards-container');
     container.replaceChildren(); // empty
     
-    const deckData = JSON.parse(window.localStorage.getItem('featurematch-tool-json'))?.find?.((e) => (e.name === name));
+    const deckData = JSON.parse(window.localStorage.getItem('featurematch-tool-json'))?.find?.((e) => (e.name.trim().toLowerCase() === name.toLowerCase()));
     if (!deckData) {
         container.innerText = 'No deck data found';
         return;
@@ -30,7 +30,6 @@ const loadPlayerTo = ((element, name) => {
         for (const subdeck of [deck.one, deck.two, deck.three]) {
             if (!subdeck) continue;
             for (const card of subdeck) {
-                console.log(card, cardsSet);
                 if (cardsSet.has(card)) continue;
                 cardsSet.add(card);
                 const elm = document.createElement('a');
@@ -50,8 +49,8 @@ document.getElementById('load-players').addEventListener('click', () => {
         window.alert('Bad message (not 5 fields, each separated by 4 spaces)');
         return;
     }
-    loadPlayerTo(document.querySelector('.player-container.blue'), fields[1]);
-    loadPlayerTo(document.querySelector('.player-container.red'), fields[3]);
+    loadPlayerTo(document.querySelector('.player-container.blue'), fields[1].trim());
+    loadPlayerTo(document.querySelector('.player-container.red'), fields[3].trim());
 });
 
 document.getElementById('left-right').addEventListener('click', () => {
