@@ -1,3 +1,7 @@
+document.getElementById('load-json').addEventListener('click', () => {
+    document.getElementById('select-file').click();
+});
+
 document.getElementById('select-file').addEventListener('change', function() {
     if (!this.files.length) return;
     const reader = new FileReader();
@@ -14,12 +18,26 @@ if (window.localStorage.getItem('featurematch-tool-json') !== null) {
     document.getElementById('status').innerText = 'JSON load from cache OK';
 }
 
+const findDeckData = ((name) => {
+    const deckData = JSON.parse(window.localStorage.getItem('featurematch-tool-json'));
+    if (!deckData) return null;
+    const exactMatch = deckData.find((e) => (e.name.trim().toLowerCase() === name.toLowerCase()));
+    if (exactMatch) return exactMatch;
+    const parts = name.toLowerCase().split(' ');
+    const roughMatch = deckData.find((e) => {
+        const itParts = e.name.trim().toLowerCase().split(' ');
+        return parts.every((s) => itParts.includes(s));
+    });
+    if (roughMatch) return roughMatch;
+    return null;
+});
+
 const loadPlayerTo = ((element, name) => {
     element.querySelector('.player-name').innerText = name;
     const container = element.querySelector('.cards-container');
     container.replaceChildren(); // empty
     
-    const deckData = JSON.parse(window.localStorage.getItem('featurematch-tool-json'))?.find?.((e) => (e.name.trim().toLowerCase() === name.toLowerCase()));
+    const deckData = findDeckData(name);
     if (!deckData) {
         container.innerText = 'No deck data found';
         return;
@@ -43,8 +61,13 @@ const loadPlayerTo = ((element, name) => {
     }
 });
 
-document.getElementById('load-players').addEventListener('click', () => {
-    const v = window.prompt('Paste the thing from Discord');
+document.getElementById('load-players').addEventListener('click', async () => {
+    let v = null;
+    try {
+        v = await navigator.clipboard.readText();
+    } catch (e) {}
+    if (v === null) v = window.prompt('Paste the thing from Discord');
+    if (!v) return;
     const fields = v.split('    ');
     if (fields.length !== 5) {
         window.alert('Bad message (not 5 fields, each separated by 4 spaces)');
@@ -52,6 +75,7 @@ document.getElementById('load-players').addEventListener('click', () => {
     }
     loadPlayerTo(document.querySelector('.player-container.blue'), fields[1].trim());
     loadPlayerTo(document.querySelector('.player-container.red'), fields[3].trim());
+    document.getElementById('status2').innerText = `Table ${fields[0]} loaded`;
 });
 
 document.getElementById('left-right').addEventListener('click', () => {

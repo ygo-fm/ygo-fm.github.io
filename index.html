@@ -8,12 +8,10 @@
     </head>
     <body>
         <div id="top">
-            <span>
-                <label for="select-file">Replace decks.json:</label>
-                <input id="select-file" type="file" accept="application/json">
-            </span>
+            <button id="load-json">Load decks</button>
             <span id="status"></span>
             <button id="load-players">Load players</button>
+            <span id="status2"></span>
             <button id="left-right">Flip left/right</button>
         </div>
         <div id="bottom">
@@ -26,5 +24,6 @@
                 <div class="cards-container"></div>
             </div>
         </div>
+        <input id="select-file" type="file" accept="application/json">
     </body>
 </html>
