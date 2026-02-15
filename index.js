@@ -29,6 +29,7 @@ const findDeckData = ((name) => {
         return parts.every((s) => itParts.includes(s));
     });
     if (roughMatch) return roughMatch;
+    if (name.startsWith('vs ')) return findDeckData(name.substr(3));
     return null;
 });
 
