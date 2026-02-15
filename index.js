@@ -43,6 +43,7 @@ const loadPlayerTo = ((element, name) => {
         container.innerText = 'No deck data found';
         return;
     }
+    element.querySelector('.player-name').innerText = deckData.name;
     const cardsSet = new Set();
     for (const deck of [deckData.deck, deckData.extra, deckData.side]) {
         if (!deck) continue;
