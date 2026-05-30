@@ -70,14 +70,23 @@ document.getElementById('load-players').addEventListener('click', async () => {
     } catch (e) {}
     if (v === null) v = window.prompt('Paste the thing from Discord');
     if (!v) return;
-    const fields = v.split('    ');
-    if (fields.length !== 5) {
-        window.alert('Bad message (not 5 fields, each separated by 4 spaces)');
-        return;
+    try { /* YCS tool */
+        const fields = v.split('    ');
+        if (fields.length !== 5) throw 'Bad message (not 5 fields, each separated by 4 spaces)';
+        loadPlayerTo(document.querySelector('.player-container.blue'), fields[1].trim());
+        loadPlayerTo(document.querySelector('.player-container.red'), fields[3].trim());
+        document.getElementById('status2').innerText = `Table ${fields[0].trim()} loaded`;
+    } catch (e) {
+        try { /* JLL tool */
+            const fields = v.split('\t');
+            if (fields.length < 5) throw 'Bad message (not >= 5 fields, each separated by tabs)';
+            loadPlayerTo(document.querySelector('.player-container.blue'), fields[1].trim());
+            loadPlayerTo(document.querySelector('.player-container.red'), fields[5].trim());
+            document.getElementById('status2').innerText = `Table ${fields[0].trim()} loaded`;
+        } catch (e2) {
+            window.alert('Failed to load')
+        }
     }
-    loadPlayerTo(document.querySelector('.player-container.blue'), fields[1].trim());
-    loadPlayerTo(document.querySelector('.player-container.red'), fields[3].trim());
-    document.getElementById('status2').innerText = `Table ${fields[0]} loaded`;
 });
 
 document.getElementById('left-right').addEventListener('click', () => {
